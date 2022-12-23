@@ -105,15 +105,13 @@ var datalist_value = document.getElementById('videoInput');
 var video_list;
 var datalist_value_selected;
 var t;
+var keys;
 
-setTimeout(() => {
+function get_populated_list() {
     t = JSON.parse(video_list);
-    var keys = Object.keys(t);
-    // console.log("keys", keys);
-    // console.log("values", values);
-    populateList(keys);
-}, 5000);
-
+    keys = Object.keys(t);
+    return keys
+}
 
 datalist_value.addEventListener('change', function (e) {
 
@@ -137,7 +135,7 @@ datalist_value.addEventListener('change', function (e) {
 
 
 get_uploaded_files()
-    .then(result => video_list = result.responseText)
+    .then(console.log("video_list>>>", video_list))
     .catch(error => console.error('error', error));
 
 
@@ -146,5 +144,10 @@ async function get_uploaded_files() {
         contentType:
             "text/json"
     });
+
+    video_list = request.responseText;
+
+    populateList(get_populated_list());
+
     return request
 }

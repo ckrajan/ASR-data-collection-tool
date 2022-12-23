@@ -9,14 +9,14 @@
 #export_csv {
   background-color: #f39b28;
   padding: 15px 20px;
-  margin-top: 50px;
+  margin-top: 350px;
   margin-left: 100px;
 }
 
 #chop_upload {
   background-color: #f39b28;
   padding: 15px 20px;
-  margin-top: 50px;
+  margin-top: 350px;
   margin-left: 400px;
 }
 
@@ -24,4 +24,10 @@
   margin-top: 40px;
   margin-left: 400px;
   position: absolute;
+}
+
+.btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }

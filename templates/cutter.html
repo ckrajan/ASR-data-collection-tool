@@ -43,8 +43,6 @@
       <label for="select">Select the audio:</label>
       <select id="videoInput" size="4">
       </select>
-      <!-- <input type="text" list="videoList" id="videoInput" />
-      <datalist id="videoList"></datalist> -->
     </div>
 
     <br><br>
@@ -56,21 +54,8 @@
     <p>
       <input type="submit" id="upload_id" value="Upload">
     </p>
-    <!-- <div id="upload_collection" style="display:none;">
-      <label for=" fname">Collection:</label>
-      <input type="text" id="collection" name="collection" required>
-    </div><br> -->
     <br>
   </form>
-
-  <!-- {% if filename %}
-  <div id="play_video">
-    <video id="video_scr_id" autoplay="autoplay" width="800" height="500" controls="controls" preload="preload">
-      <source src="{{ url_for('display_video', filename=filename) }}" type="video/mp4">
-      </source>
-    </video>
-  </div>
-  {% endif %} -->
 
   <script>
     let file_name = '{{ filename }}';
@@ -87,20 +72,12 @@
     <input type="text" id="select_collection_id" name="collection" required>
   </div>
 
-  <!-- <div class="frame">
-    <span id="currentFrame">0</span>
-  </div>
-
-  <div id="controls">
-    <button id="play-pause">Play</button>
-  </div> -->
-
   <div id="list" style="overflow-y: scroll; height:750px; display:none;"></div>
 
-  <button id="export_csv" style="display:none; position:fixed;" onclick="csv_export()">Export as
+  <button id="export_csv" class="btn" style="display:none; position:fixed;" onclick="csv_export()">Export as
     CSV <i class="fa fa-check"></i></button>
 
-  <button id="chop_upload" style="display:none; position:fixed;" onclick="chop_upload()">Upload
+  <button id="chop_upload" class="btn" style="display:none; position:fixed;" onclick="chop_upload()">Upload
     chopped clips <i class="fa fa-check"></i></button>
 
 </body>

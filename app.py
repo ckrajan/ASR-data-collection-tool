@@ -88,7 +88,6 @@ def chop_video():
 		if(start_time != end_time):
 			song_temp = song[start_time : end_time]
 			song_temp.export(os.path.join(chop_path, filename_only + '_' + i[2] + ".wav"))
-			# song_temp.export("nochur_{}.wav".format(i[2]), format="wav")
 	
 	return filename
  

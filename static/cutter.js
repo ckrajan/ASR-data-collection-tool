@@ -64,10 +64,6 @@ document.body.onkeyup = function (e) {
             var sec_num = parseInt(video_scr_select.currentTime, 10);
         }
 
-
-        // frame = document.getElementById("currentFrame").innerHTML;
-        // frame_arr.push(frame);
-
         var hours = Math.floor(sec_num / 3600);
         var minutes = Math.floor(sec_num / 60) % 60;
         var seconds = sec_num % 60;
@@ -94,46 +90,32 @@ document.body.onkeyup = function (e) {
             time_arr.push(hours + ":" + minutes + ":" + seconds);
         }
 
-        // if (press % 2 == 0) {
+        if (counter == 0) {
+            rows[counter] = ["File name", "Collection Name", "Split name", "Start time", "End time"];
+        }
 
-            if (counter == 0) {
-                rows[counter] = ["File name", "Collection Name", "Split name", "Start time", "End time"];
-            }
+        counter++;
+        var end_time = time_arr[0];
 
-            counter++;
-            // console.log(time_arr);
-            // console.log("frame_arr", frame_arr);
-            // var start_time = time_arr[0];
-            var end_time = time_arr[0];
+        var end_time_sec = time_arr_sec[0];
+        split_name++;
+        ls.style.display = "block";
+        ls.innerHTML += '<div id="box' + counter + '" style="color:rgb(31, 87, 37); font-size: 18px;"><i style="color:red; id="trash' + counter + '" class="fas fa-trash" onclick="removeItem(this);"></i> Collection: ' + collection_name + '; Split name: Clip_' + split_name + '; Start time: ' + start_time + '; End time: ' + end_time + '</div>';
 
-            var end_time_sec = time_arr_sec[0];
+        if (counter > 0) {
+            rows[counter] = [uploaded_file_name, collection_name, "Clip_" + split_name, start_time_sec, end_time_sec];
+        }
 
-            // var start_frame = frame_arr[0];
-            // var end_frame = frame_arr[1];
+        start_time_sec = end_time_sec;
+        start_time = end_time;
 
-            split_name++;
-            ls.style.display = "block";
-            ls.innerHTML += '<div id="box' + counter + '" style="color:rgb(31, 87, 37); font-size: 18px;"><i style="color:red; id="trash' + counter + '" class="fas fa-trash" onclick="removeItem(this);"></i> Collection: ' + collection_name + '; Split name: Clip_' + split_name + '; Start time: ' + start_time + '; End time: ' + end_time + '</div>';
+        while (time_arr_sec.length > 0) {
+            time_arr_sec.pop();
+        }
 
-            if (counter > 0) {
-                rows[counter] = [uploaded_file_name, collection_name, "Clip_" + split_name, start_time_sec, end_time_sec];
-            }
-
-            start_time_sec = end_time_sec;
-            start_time = end_time;
-
-            while (time_arr_sec.length > 0) {
-                time_arr_sec.pop();
-            }
-
-            while (time_arr.length > 0) {
-                time_arr.pop();
-            }
-
-            // while (frame_arr.length > 0) {
-            //     frame_arr.pop();
-            // }
-        // }
+        while (time_arr.length > 0) {
+            time_arr.pop();
+        }
     }
 }
 
@@ -208,9 +190,6 @@ function chop_upload() {
     send_csv();
 }
 
-// This is that input field
-// const videoInput = document.getElementById('videoInput');
-
 // This is the datalist
 const datalist = document.getElementById('videoInput');
 
@@ -225,47 +204,17 @@ function populateList(arr) {
 var video_list;
 var datalist_value_selected;
 
-setTimeout(() => {
-    var t = JSON.parse(video_list)
-    populateList(t);
-}, 5000);
 
 upload.addEventListener("click", function (e) {
     document.getElementById('upload_collection').style.display = "block";
 });
 
 datalist_value.addEventListener('change', function (e) {
-    // var currentFrame = $('#currentFrame');
-    // var video = VideoFrame({
-    //     id: 'video_scr_id_server',
-    //     frameRate: 24,
-    //     callback: function (frame) {
-    //         currentFrame.html(frame);
-    //     }
-    // });
-
-    // $('#play-pause').click(function () {
-    //     if (video.video.paused) {
-    //         video.video.play();
-    //         video.listen('frame');
-    //         $(this).html('Pause');
-    //     } else {
-    //         video.video.pause();
-    //         video.stopListen();
-    //         $(this).html('Play');
-    //     }
-    // });
-
-
     play_type = "select";
     document.getElementById('select_collection').style.display = "block";
-    export_csv.style.marginTop = '550px';
-    export_csv.style.marginLeft = '100px';
     ls.style.marginTop = '-150px';
     ls.style.marginLeft = '900px';
     ls.style.marginRight = '50px';
-    chop_upload_id.style.marginTop = '550px';
-    chop_upload_id.style.marginLeft = '400px';
 
     datalist_value_selected = datalist_value.value;
 
@@ -289,7 +238,7 @@ datalist_value.addEventListener('change', function (e) {
 
 
 get_uploaded_files()
-    .then(result => video_list = result.responseText)
+    .then(console.log("video_list>>>", video_list))
     .catch(error => console.error('error', error));
 
 
@@ -298,5 +247,14 @@ async function get_uploaded_files() {
         contentType:
             "text/json"
     });
+    video_list = request.responseText;
+
+    populateList(get_populated_list());
+
     return request
+}
+
+function get_populated_list() {
+    var t = JSON.parse(video_list);
+    return t
 }
