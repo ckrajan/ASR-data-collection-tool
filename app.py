@@ -156,4 +156,4 @@ def yes_no_files():
 	return filename_only
 
 if __name__ == '__main__':
-    app.run(port=8081, debug=True)
+    app.run(port=8081, host='0.0.0.0', debug=True)
