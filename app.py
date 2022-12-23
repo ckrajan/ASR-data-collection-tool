@@ -68,6 +68,8 @@ def upload():
 	with open(chop_path + filename_only + '.csv', 'w') as out_file:
 		writer = csv.writer(out_file)
 		writer.writerows(reader)
+		
+	return chop_path
 
 #### Split by time
 @app.route('/chop_video', methods=['POST'])
