@@ -112,7 +112,7 @@ setTimeout(() => {
     // console.log("keys", keys);
     // console.log("values", values);
     populateList(keys);
-}, 100);
+}, 5000);
 
 
 datalist_value.addEventListener('change', function (e) {
