@@ -53,7 +53,7 @@ def upload_video():
 	else:
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-		flash('Video successfully uploaded')
+		flash('Audio successfully uploaded')
 		return render_template('cutter.html', filename=filename, collection=collection)
 
 @app.route('/upload_csv', methods=['POST'])
