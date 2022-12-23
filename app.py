@@ -10,6 +10,7 @@ from pydub import AudioSegment
 import fnmatch
 from collections import defaultdict
 import json
+import jsonpickle
 
 if not os.path.exists('static/uploads'):
 	os.makedirs('static/uploads/', exist_ok=True)
@@ -101,7 +102,7 @@ def uploaded_files():
 	video_list = 'static/uploads/original_audio/'
 	allfiles = os.listdir(video_list)
 	files = [ fname for fname in allfiles ]
-	return files
+	return jsonpickle.encode(files)
 
 
 
