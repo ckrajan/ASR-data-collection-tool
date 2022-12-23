@@ -228,7 +228,7 @@ var datalist_value_selected;
 setTimeout(() => {
     var t = JSON.parse(video_list)
     populateList(t);
-}, 100);
+}, 5000);
 
 upload.addEventListener("click", function (e) {
     document.getElementById('upload_collection').style.display = "block";
