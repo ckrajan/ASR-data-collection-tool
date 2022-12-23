@@ -1,0 +1,27 @@
+#list {
+  position: fixed;
+  padding: 5px 30px;
+  margin-top: -630px;
+  margin-left: 900px;
+  margin-right: 50px;
+}
+
+#export_csv {
+  background-color: #f39b28;
+  padding: 15px 20px;
+  margin-top: 50px;
+  margin-left: 100px;
+}
+
+#chop_upload {
+  background-color: #f39b28;
+  padding: 15px 20px;
+  margin-top: 50px;
+  margin-left: 400px;
+}
+
+#dropdown{
+  margin-top: 40px;
+  margin-left: 400px;
+  position: absolute;
+}
