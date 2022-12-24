@@ -1,0 +1,34 @@
+#list {
+  position: fixed;
+  padding: 5px 30px;
+  margin-top: -630px;
+  margin-left: 900px;
+  margin-right: 50px;
+}
+
+#export_csv {
+  background-color: #f39b28;
+  padding: 15px 20px;
+  margin-top: 200px;
+  margin-left: 300px;
+}
+
+#dropdown {
+  margin-top: 40px;
+  margin-left: 400px;
+  position: absolute;
+}
+
+.btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.form-control {
+  height: 1300px;
+  width: 800px;
+  font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+  font-size: 140%;
+  overflow: scroll;
+}

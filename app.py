@@ -12,6 +12,12 @@ from collections import defaultdict
 import json
 import jsonpickle
 
+if not os.path.exists('static/uploads_lyrics'):
+	os.makedirs('static/uploads_lyrics/', exist_ok=True)
+
+if not os.path.exists('static/uploads_lyrics/original_audio'):
+	os.makedirs('static/uploads_lyrics/original_audio', exist_ok=True)
+
 if not os.path.exists('static/uploads'):
 	os.makedirs('static/uploads/', exist_ok=True)
 
@@ -25,6 +31,8 @@ if not os.path.exists('static/uploads/filtered_audio'):
 	os.makedirs('static/uploads/filtered_audio', exist_ok=True)
 
 UPLOAD_FOLDER = 'static/uploads/original_audio/'
+LYRICS_UPLOAD_FOLDER = 'static/uploads_lyrics/'
+
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "secret key"
@@ -156,6 +164,65 @@ def yes_no_files():
 		shutil.copy("static/uploads/chopped_audio/"+filename_only+"/"+no_key, "static/uploads/filtered_audio/"+ filename_only+'_no_files/'+no_value+".wav")
     
 	return filename_only
+
+
+#####For Lyrics cutter#########
+@app.route("/lyrics")
+def cutter_lyrics():
+    return render_template('cutter_lyrics.html')
+
+@app.route('/compare_lyrics')
+def compare_tool_lyrics():
+    return render_template('compare.html')
+
+
+@app.route('/lyrics', methods=['POST'])
+def upload_video_lyrics():
+	collection = request.form.get('collection')
+	if 'file' not in request.files:
+		flash('No file part')
+		return redirect(request.url)
+	file = request.files['file']
+	if file.filename == '':
+		flash('No image selected for uploading')
+		return redirect(request.url)
+	else:
+		filename = secure_filename(file.filename)
+		filename_only = os.path.splitext(filename)[0]
+
+		if not os.path.exists('static/uploads_lyrics/%s' % filename_only + '/'):
+			os.makedirs('static/uploads_lyrics/%s' % filename_only + '/', exist_ok=True)
+
+		file.save(os.path.join('static/uploads_lyrics/%s' % filename_only + '/', filename))
+		flash('Audio successfully uploaded')
+		return render_template('cutter_lyrics.html', filename=filename, collection=collection)
+
+@app.route('/upload_csv_lyrics', methods=['POST'])
+def upload_lyrics():
+	json_body = request.get_json()
+	csv_str = json_body['csv']
+	filename = json_body['filename']
+	filename_only = os.path.splitext(filename)[0]
+
+	reader = csv.reader(csv_str.splitlines(), skipinitialspace=True)
+	with open('static/uploads_lyrics/%s' % filename_only + '/' + filename_only + '.csv', 'w') as out_file:
+		writer = csv.writer(out_file)
+		writer.writerows(reader)
+	
+	return filename_only
+
+
+@app.route('/display_lyrics/<filename>')
+def display_video_lyrics(filename):
+	return redirect(url_for('static', filename='uploads_lyrics/' + filename), code=301)
+
+@app.route('/uploaded_files_lyrics', methods=['GET', 'POST'])
+def uploaded_files_lyrics():
+	video_list = 'static/uploads_lyrics/'
+	allfiles = os.listdir(video_list)
+	files = [ fname for fname in allfiles ]
+	return jsonpickle.encode(files)
+
 
 if __name__ == '__main__':
     app.run(port=8081, host='0.0.0.0', debug=True)
